@@ -9,7 +9,7 @@
 # Flutter Final Hackathon App
 
 In this assessment i will create an news app by using only given stack.<br>
-For plan kindly check out my PLAN.md File.
+For plan kindly check out my [PLAN.md](./PLAN.md) File.
 
 ## Stack
 
@@ -21,3 +21,6 @@ For plan kindly check out my PLAN.md File.
   - MongoDB
 - ### Authentication
   - Firebase Authentication
+- ### APIs
+  - [MediaStack](https://mediastack.com/)
+  - [NewsApi](https://newsapi.org/)
