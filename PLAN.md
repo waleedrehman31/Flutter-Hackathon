@@ -1,4 +1,6 @@
-# There is the plan how to complete this hackathon assessment
+# Plan
+
+- There is the plan how to complete this hackathon assessment
 
 ## TODO
 
