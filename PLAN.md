@@ -4,17 +4,18 @@
 
 ## TODO
 
-- [] Create UI
-  - [] Home Page
-  - [] Profile Screen
-  - [] Search Screen
-  - [] Favourite News Screen
-  - [] Authentication screens
-    - [] Login Page
-    - [] Singup Page
-- [] BackEnd
-  - [] Fetch Data From News API
-  - [] Setting up firebase authentication
-  - [] creating nodejs server and database
-  - [] add favourite news in database
-  - [] check if user login or not
+- [ ] Create UI
+  - [x] Create Layout
+  - [ ] Home Page
+  - [ ] Profile Screen
+  - [ ] Search Screen
+  - [ ] Favourite News Screen
+  - [ ] Authentication screens
+    - [ ] Login Page
+    - [ ] Singup Page
+- [ ] BackEnd
+  - [ ] Fetch Data From News API
+  - [ ] Setting up firebase authentication
+  - [ ] creating nodejs server and database
+  - [ ] add favourite news in database
+  - [ ] check if user login or not
