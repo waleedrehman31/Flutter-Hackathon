@@ -8,40 +8,60 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final primaryColor = Color(0xFF6200EE);
+  final secondaryColor = Colors.white;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GridView.count(
-        primary: true,
-        padding: const EdgeInsets.all(1.0),
-        crossAxisCount: 2,
-        childAspectRatio: 0.85,
-        mainAxisSpacing: 1.0,
-        crossAxisSpacing: 1.0,
-        children: <Widget>[
-          myCard("Facebook",
-              "https://cdn.pixabay.com/photo/2018/03/21/16/50/woman-3247382__340.jpg"),
-          myCard("Twitter",
-              "https://cdn.pixabay.com/photo/2018/03/21/16/50/woman-3247382__340.jpg"),
-          myCard("Instagram",
-              "https://cdn.pixabay.com/photo/2018/03/21/16/50/woman-3247382__340.jpg"),
-          myCard("Linkedin",
-              "https://cdn.pixabay.com/photo/2018/03/21/16/50/woman-3247382__340.jpg"),
-          myCard("Google Plus",
-              "https://cdn.pixabay.com/photo/2018/03/21/16/50/woman-3247382__340.jpg"),
-          myCard("Launcher Icon",
-              "https://cdn.pixabay.com/photo/2018/03/21/16/50/woman-3247382__340.jpg"),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.all(10),
+              margin: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: primaryColor,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              width: MediaQuery.of(context).size.width,
+              child: Center(
+                child: Text(
+                  "News Homepage",
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: secondaryColor,
+                  ),
+                ),
+              ),
+            ),
+            myCard(
+              "Waleed ur Rehman",
+              "https://cdn.pixabay.com/photo/2018/03/21/16/50/woman-3247382__340.jpg",
+            ),
+            myCard(
+              "Waleed ur Rehman",
+              "https://cdn.pixabay.com/photo/2018/03/21/16/50/woman-3247382__340.jpg",
+            ),
+            myCard(
+              "Waleed ur Rehman",
+              "https://cdn.pixabay.com/photo/2018/03/21/16/50/woman-3247382__340.jpg",
+            ),
+            myCard(
+              "Waleed ur Rehman",
+              "https://cdn.pixabay.com/photo/2018/03/21/16/50/woman-3247382__340.jpg",
+            ),
+            myCard(
+              "Waleed ur Rehman",
+              "https://cdn.pixabay.com/photo/2018/03/21/16/50/woman-3247382__340.jpg",
+            ),
+            myCard(
+              "Waleed ur Rehman",
+              "https://cdn.pixabay.com/photo/2018/03/21/16/50/woman-3247382__340.jpg",
+            ),
+          ],
+        ),
       ),
-      // Card(
-      //   child: Column(
-      //     mainAxisSize: MainAxisSize.min,
-      //     children: <Widget>[
-      //       const ListTile(
-      //         leading: Icon(Icons.album),
-      //         title: Text('The Enchanted Nightingale'),
-      //         subtitle: Text('Music by Julie Gable. Lyrics by Sidney Stein.'),
-      //       ),
     );
   }
 }
@@ -49,7 +69,7 @@ class _HomeState extends State<Home> {
 Widget myCard(name, image) {
   return GestureDetector(
     onTap: () {
-      print("onTap called.");
+      print("You Tap On Card");
     },
     child: Card(
       elevation: 1.5,
@@ -61,20 +81,41 @@ Widget myCard(name, image) {
           Image(
             image: NetworkImage(image),
           ),
-          SizedBox(
-            height: 10,
+          Container(
+            margin: EdgeInsets.only(left: 5, right: 5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  name,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                IconButton(icon: Icon(Icons.favorite_border), onPressed: () {})
+              ],
+            ),
           ),
-          Center(
-            child: Text(name),
+          Container(
+            margin: EdgeInsets.only(left: 5, right: 5),
+            child: Text("Description Goes Here"),
           ),
-          SizedBox(
-            height: 10,
-          ),
-          TextButton(
-              child: const Text('LISTEN'),
+          Container(
+            margin: EdgeInsets.only(left: 5, right: 5),
+            child: ElevatedButton(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Read More'),
+                  Icon(Icons.arrow_forward_ios),
+                ],
+              ),
               onPressed: () {
                 print('Button Pressed from card');
-              }),
+              },
+            ),
+          ),
         ],
       ),
     ),
