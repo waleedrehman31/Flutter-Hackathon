@@ -6,7 +6,7 @@
 
 - [ ] Create UI
   - [x] Create Layout
-  - [ ] Home Page
+  - [x] Home Page
   - [ ] Profile Screen
   - [ ] Search Screen
   - [ ] Favourite News Screen
@@ -19,3 +19,5 @@
   - [ ] creating nodejs server and database
   - [ ] add favourite news in database
   - [ ] check if user login or not
+- [ ] Show Data on UI
+  - [ ] make UI attractive
