@@ -9,6 +9,9 @@ class Layout extends StatefulWidget {
 }
 
 class _LayoutState extends State<Layout> {
+  int currentTab = 0;
+  Widget currentScreen = Home();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,36 +33,69 @@ class _LayoutState extends State<Layout> {
       ),
       drawer: myDrawer(context),
       body: Center(
-        child: Home(),
+        child: PageStorage(bucket: PageStorageBucket(), child: currentScreen),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Color(0xFF6200EE),
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white.withOpacity(.60),
-        selectedFontSize: 14,
-        unselectedFontSize: 14,
-        onTap: (value) {
-          // Respond to item press.
-        },
-        items: [
-          BottomNavigationBarItem(
-            title: Text('News'),
-            icon: Icon(Icons.library_books),
-          ),
-          BottomNavigationBarItem(
-            title: Text('Favorites'),
-            icon: Icon(Icons.favorite),
-          ),
-          BottomNavigationBarItem(
-            title: Text('Search'),
-            icon: Icon(Icons.search),
-          ),
-          BottomNavigationBarItem(
-            title: Text('Profile'),
-            icon: Icon(Icons.account_box_rounded),
-          ),
-        ],
+      bottomNavigationBar: BottomAppBar(
+        // notchMargin: 50,
+        color: Color(0xFF6200EE),
+
+        child: Container(
+          height: 60,
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                MaterialButton(
+                  minWidth: 50,
+                  onPressed: () => {
+                    setState(() {
+                      currentScreen = Home();
+                      currentTab = 0;
+                    })
+                  },
+                  child: Icon(
+                    Icons.home,
+                    //currentTab == 3 ? Colors.white : Colors.black)
+                    color: currentTab == 0 ? Colors.white : Colors.white70,
+                  ),
+                ),
+                MaterialButton(
+                  minWidth: 60,
+                  onPressed: () => {
+                    setState(() {
+                      currentTab = 1;
+                    })
+                  },
+                  child: Icon(
+                    Icons.list,
+                    color: currentTab == 1 ? Colors.white : Colors.white70,
+                  ),
+                ),
+                MaterialButton(
+                  minWidth: 60,
+                  onPressed: () => {},
+                  child: Icon(
+                    Icons.search,
+                    color: Colors.white70,
+                  ),
+                ),
+                MaterialButton(
+                  minWidth: 50,
+                  onPressed: () => {},
+                  child: Icon(
+                    Icons.add_shopping_cart_outlined,
+                    color: Colors.white70,
+                  ),
+                ),
+                MaterialButton(
+                  minWidth: 60,
+                  onPressed: () => {},
+                  child: Icon(
+                    Icons.person,
+                    color: Colors.white70,
+                  ),
+                ),
+              ]),
+        ),
       ),
     );
   }
