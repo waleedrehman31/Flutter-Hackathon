@@ -69,7 +69,7 @@ class _LayoutState extends State<Layout> {
                   minWidth: 60,
                   onPressed: () => {
                     setState(() {
-                      currentScreen = Register();
+                      currentScreen = Login();
                       currentTab = 1;
                     })
                   },
