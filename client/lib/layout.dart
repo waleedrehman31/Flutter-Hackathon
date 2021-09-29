@@ -1,5 +1,6 @@
 import 'package:client/screens/Home.dart';
 import 'package:client/screens/Profile.dart';
+import 'package:client/screens/Search.dart';
 import 'package:flutter/material.dart';
 
 class Layout extends StatefulWidget {
@@ -69,7 +70,7 @@ class _LayoutState extends State<Layout> {
                     })
                   },
                   child: Icon(
-                    Icons.list,
+                    Icons.favorite_outline,
                     color: currentTab == 1 ? Colors.white : Colors.white70,
                   ),
                 ),
@@ -77,6 +78,7 @@ class _LayoutState extends State<Layout> {
                   minWidth: 60,
                   onPressed: () => {
                     setState(() {
+                      currentScreen = Search();
                       currentTab = 2;
                     })
                   },
@@ -86,30 +88,18 @@ class _LayoutState extends State<Layout> {
                   ),
                 ),
                 MaterialButton(
-                  minWidth: 50,
-                  onPressed: () => {
-                    setState(() {
-                      currentTab = 3;
-                    })
-                  },
-                  child: Icon(
-                    Icons.add_shopping_cart_outlined,
-                    color: currentTab == 3 ? Colors.white : Colors.white70,
-                  ),
-                ),
-                MaterialButton(
                   minWidth: 60,
                   onPressed: () => {
                     setState(
                       () {
                         currentScreen = Profile();
-                        currentTab = 4;
+                        currentTab = 3;
                       },
                     )
                   },
                   child: Icon(
                     Icons.person,
-                    color: currentTab == 4 ? Colors.white : Colors.white70,
+                    color: currentTab == 3 ? Colors.white : Colors.white70,
                   ),
                 ),
               ]),
