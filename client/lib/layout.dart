@@ -1,4 +1,5 @@
 import 'package:client/screens/Home.dart';
+import 'package:client/screens/Profile.dart';
 import 'package:flutter/material.dart';
 
 class Layout extends StatefulWidget {
@@ -47,10 +48,12 @@ class _LayoutState extends State<Layout> {
                 MaterialButton(
                   minWidth: 50,
                   onPressed: () => {
-                    setState(() {
-                      currentScreen = Home();
-                      currentTab = 0;
-                    })
+                    setState(
+                      () {
+                        currentScreen = Home();
+                        currentTab = 0;
+                      },
+                    )
                   },
                   child: Icon(
                     Icons.home,
@@ -72,23 +75,38 @@ class _LayoutState extends State<Layout> {
                 ),
                 MaterialButton(
                   minWidth: 60,
-                  onPressed: () => {},
+                  onPressed: () => {
+                    setState(() {
+                      currentTab = 2;
+                    })
+                  },
                   child: Icon(
                     Icons.search,
-                    color: Colors.white70,
+                    color: currentTab == 2 ? Colors.white : Colors.white70,
                   ),
                 ),
                 MaterialButton(
                   minWidth: 50,
-                  onPressed: () => {},
+                  onPressed: () => {
+                    setState(() {
+                      currentTab = 3;
+                    })
+                  },
                   child: Icon(
                     Icons.add_shopping_cart_outlined,
-                    color: Colors.white70,
+                    color: currentTab == 3 ? Colors.white : Colors.white70,
                   ),
                 ),
                 MaterialButton(
                   minWidth: 60,
-                  onPressed: () => {},
+                  onPressed: () => {
+                    setState(
+                      () {
+                        currentScreen = Profile();
+                        currentTab = 4;
+                      },
+                    )
+                  },
                   child: Icon(
                     Icons.person,
                     color: Colors.white70,
