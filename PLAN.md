@@ -4,12 +4,12 @@
 
 ## TODO
 
-- [ ] Create UI
+- [x] Create UI
   - [x] Create Layout
   - [x] Home Page
   - [x] Profile Screen
   - [x] Search Screen
-  - [ ] Favourite News Screen
+  - [x] Favourite News Screen
   - [x] Authentication screens
     - [x] Login Page
     - [x] Singup Page
