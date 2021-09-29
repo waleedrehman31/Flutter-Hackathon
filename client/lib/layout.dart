@@ -1,6 +1,7 @@
 import 'package:client/screens/Home.dart';
 import 'package:client/screens/Profile.dart';
 import 'package:client/screens/Search.dart';
+import 'package:client/screens/authentication/Login.dart';
 import 'package:flutter/material.dart';
 import 'package:client/constant/constant.dart';
 
@@ -34,7 +35,7 @@ class _LayoutState extends State<Layout> {
           ),
         ],
       ),
-      drawer: myDrawer(context),
+      drawer: myDrawer(context, currentScreen, setState),
       body: Center(
         child: PageStorage(bucket: PageStorageBucket(), child: currentScreen),
       ),
@@ -67,6 +68,7 @@ class _LayoutState extends State<Layout> {
                   minWidth: 60,
                   onPressed: () => {
                     setState(() {
+                      currentScreen = Login();
                       currentTab = 1;
                     })
                   },
@@ -110,8 +112,8 @@ class _LayoutState extends State<Layout> {
   }
 }
 
-Widget myDrawer(context) {
-  bool isUser = true;
+Widget myDrawer(context, currentScreen, setState) {
+  bool isUser = false;
   if (isUser) {
     return Drawer(
       child: Column(
@@ -207,7 +209,11 @@ Widget myDrawer(context) {
             height: 100,
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              setState(() {
+                currentScreen = Login();
+              });
+            },
             child: Container(
               decoration: BoxDecoration(
                 color: primaryColor,
