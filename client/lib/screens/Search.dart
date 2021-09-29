@@ -19,13 +19,16 @@ class _SearchState extends State<Search> {
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
               hintText: 'Enter a search term',
-              prefixIcon: Icon(Icons.search),
+              prefixIcon: Icon(
+                Icons.search,
+                color: primaryColor,
+              ),
               hintStyle: TextStyle(color: Colors.grey),
               filled: true,
               fillColor: Colors.white70,
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                borderSide: BorderSide(color: Colors.green, width: 2),
+                borderSide: BorderSide(color: primaryColor, width: 2),
               ),
             ),
           ),
