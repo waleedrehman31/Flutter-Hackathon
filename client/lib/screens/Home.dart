@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:client/constant/constant.dart';
 
 class Home extends StatefulWidget {
   const Home({Key key}) : super(key: key);
@@ -8,8 +9,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final primaryColor = Color(0xFF6200EE);
-  final secondaryColor = Colors.white;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

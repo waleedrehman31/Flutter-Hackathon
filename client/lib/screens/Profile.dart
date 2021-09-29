@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:client/constant/constant.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key key}) : super(key: key);
@@ -9,8 +10,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  final primaryColor = Color(0xFF6200EE);
-  final secondaryColor = Colors.white;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -2,6 +2,7 @@ import 'package:client/screens/Home.dart';
 import 'package:client/screens/Profile.dart';
 import 'package:client/screens/Search.dart';
 import 'package:flutter/material.dart';
+import 'package:client/constant/constant.dart';
 
 class Layout extends StatefulWidget {
   const Layout({Key key}) : super(key: key);
@@ -18,7 +19,7 @@ class _LayoutState extends State<Layout> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF6200EE),
+        backgroundColor: primaryColor,
         title: Text("News App"),
         actions: <Widget>[
           CircleAvatar(
@@ -39,7 +40,7 @@ class _LayoutState extends State<Layout> {
       ),
       bottomNavigationBar: BottomAppBar(
         // notchMargin: 50,
-        color: Color(0xFF6200EE),
+        color: primaryColor,
 
         child: Container(
           height: 60,
@@ -59,7 +60,7 @@ class _LayoutState extends State<Layout> {
                   child: Icon(
                     Icons.home,
                     //currentTab == 3 ? Colors.white : Colors.black)
-                    color: currentTab == 0 ? Colors.white : Colors.white70,
+                    color: currentTab == 0 ? secondaryColor : Colors.white70,
                   ),
                 ),
                 MaterialButton(
@@ -71,7 +72,7 @@ class _LayoutState extends State<Layout> {
                   },
                   child: Icon(
                     Icons.favorite_outline,
-                    color: currentTab == 1 ? Colors.white : Colors.white70,
+                    color: currentTab == 1 ? secondaryColor : Colors.white70,
                   ),
                 ),
                 MaterialButton(
@@ -84,7 +85,7 @@ class _LayoutState extends State<Layout> {
                   },
                   child: Icon(
                     Icons.search,
-                    color: currentTab == 2 ? Colors.white : Colors.white70,
+                    color: currentTab == 2 ? secondaryColor : Colors.white70,
                   ),
                 ),
                 MaterialButton(
@@ -99,7 +100,7 @@ class _LayoutState extends State<Layout> {
                   },
                   child: Icon(
                     Icons.person,
-                    color: currentTab == 3 ? Colors.white : Colors.white70,
+                    color: currentTab == 3 ? secondaryColor : Colors.white70,
                   ),
                 ),
               ]),
@@ -148,7 +149,7 @@ Widget myDrawer(context) {
             onTap: () {},
             child: Container(
               decoration: BoxDecoration(
-                color: Color(0xFF6200EE),
+                color: primaryColor,
                 borderRadius: BorderRadius.circular(12),
               ),
               margin: EdgeInsets.only(left: 15, right: 15),
@@ -159,7 +160,7 @@ Widget myDrawer(context) {
                     "Logout",
                     style: TextStyle(
                       fontSize: (20),
-                      color: Colors.white,
+                      color: secondaryColor,
                     ),
                   ),
                 ),
@@ -209,7 +210,7 @@ Widget myDrawer(context) {
             onTap: () {},
             child: Container(
               decoration: BoxDecoration(
-                color: Color(0xFF6200EE),
+                color: primaryColor,
                 borderRadius: BorderRadius.circular(12),
               ),
               margin: EdgeInsets.only(left: 15, right: 15),
@@ -234,7 +235,7 @@ Widget myDrawer(context) {
             onTap: () {},
             child: Container(
               decoration: BoxDecoration(
-                color: Color(0xFF6200EE),
+                color: primaryColor,
                 borderRadius: BorderRadius.circular(12),
               ),
               margin: EdgeInsets.only(left: 15, right: 15),
