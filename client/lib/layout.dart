@@ -1,3 +1,4 @@
+import 'package:client/screens/Favourite.dart';
 import 'package:client/screens/Home.dart';
 import 'package:client/screens/Profile.dart';
 import 'package:client/screens/Search.dart';
@@ -69,7 +70,7 @@ class _LayoutState extends State<Layout> {
                   minWidth: 60,
                   onPressed: () => {
                     setState(() {
-                      currentScreen = Login();
+                      currentScreen = Favourite();
                       currentTab = 1;
                     })
                   },
