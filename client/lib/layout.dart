@@ -109,7 +109,7 @@ class _LayoutState extends State<Layout> {
                   },
                   child: Icon(
                     Icons.person,
-                    color: Colors.white70,
+                    color: currentTab == 4 ? Colors.white : Colors.white70,
                   ),
                 ),
               ]),
