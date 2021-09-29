@@ -8,11 +8,11 @@
   - [x] Create Layout
   - [x] Home Page
   - [x] Profile Screen
-  - [ ] Search Screen
+  - [x] Search Screen
   - [ ] Favourite News Screen
-  - [ ] Authentication screens
-    - [ ] Login Page
-    - [ ] Singup Page
+  - [x] Authentication screens
+    - [x] Login Page
+    - [x] Singup Page
 - [ ] BackEnd
   - [ ] Fetch Data From News API
   - [ ] Setting up firebase authentication
