@@ -7,7 +7,7 @@
 - [ ] Create UI
   - [x] Create Layout
   - [x] Home Page
-  - [ ] Profile Screen
+  - [x] Profile Screen
   - [ ] Search Screen
   - [ ] Favourite News Screen
   - [ ] Authentication screens
