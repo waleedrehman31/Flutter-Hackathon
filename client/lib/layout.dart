@@ -1,7 +1,8 @@
 import 'package:client/screens/Home.dart';
 import 'package:client/screens/Profile.dart';
 import 'package:client/screens/Search.dart';
-import 'package:client/screens/authentication/Login.dart';
+import 'package:client/screens/authenticationScreen/Login.dart';
+import 'package:client/screens/authenticationScreen/Register.dart';
 import 'package:flutter/material.dart';
 import 'package:client/constant/constant.dart';
 
@@ -68,7 +69,7 @@ class _LayoutState extends State<Layout> {
                   minWidth: 60,
                   onPressed: () => {
                     setState(() {
-                      currentScreen = Login();
+                      currentScreen = Register();
                       currentTab = 1;
                     })
                   },
