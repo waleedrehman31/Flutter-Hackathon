@@ -1,15 +1,19 @@
 import 'package:client/model/news_model.dart';
+import 'package:client/screens/ArticleDetail.dart';
 import 'package:flutter/material.dart';
+import 'package:client/constant/constant.dart';
 
 Widget customListTile(Article article, BuildContext context) {
   return InkWell(
     onTap: () {
-      // Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //         builder: (context) => ArticlePage(
-      //           article: article,
-      //         )));
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ArticleDetail(
+            article: article,
+          ), //  article: article,
+        ),
+      );
     },
     child: Container(
       margin: EdgeInsets.all(12.0),
@@ -42,10 +46,11 @@ Widget customListTile(Article article, BuildContext context) {
             height: 8.0,
           ),
           Container(
-            padding: EdgeInsets.all(6.0),
+            padding:
+                EdgeInsets.only(left: 8.0, right: 8.0, top: 6.0, bottom: 6.0),
             decoration: BoxDecoration(
-              color: Colors.red,
-              borderRadius: BorderRadius.circular(30.0),
+              color: primaryColor,
+              borderRadius: BorderRadius.circular(5.0),
             ),
             child: Text(
               article.source.name,
@@ -63,7 +68,32 @@ Widget customListTile(Article article, BuildContext context) {
               fontWeight: FontWeight.bold,
               fontSize: 16.0,
             ),
-          )
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 5, right: 5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                IconButton(icon: Icon(Icons.favorite_border), onPressed: () {})
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 5, right: 5),
+            child: ElevatedButton(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Read More'),
+                  Icon(Icons.arrow_forward_ios),
+                ],
+              ),
+              style: ElevatedButton.styleFrom(primary: primaryColor),
+              onPressed: () {
+                print('Button Pressed from card');
+              },
+            ),
+          ),
         ],
       ),
     ),
