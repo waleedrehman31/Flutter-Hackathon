@@ -17,6 +17,7 @@ class Layout extends StatefulWidget {
 class _LayoutState extends State<Layout> {
   int currentTab = 0;
   Widget currentScreen = Home();
+  bool isUser = false;
 
   @override
   Widget build(BuildContext context) {
@@ -25,16 +26,63 @@ class _LayoutState extends State<Layout> {
         backgroundColor: primaryColor,
         title: Text("News App"),
         actions: <Widget>[
-          CircleAvatar(
-            radius: 25,
-            backgroundImage: NetworkImage(
-                'https://cdn.pixabay.com/photo/2018/03/21/16/50/woman-3247382__340.jpg'),
+          TextButton(
+            child: Text(
+              "Login",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: currentTab == 5 ? secondaryColor : Colors.white70,
+              ),
+            ),
+            onPressed: () => {
+              setState(
+                () {
+                  currentScreen = Login();
+                  currentTab = 5;
+                },
+              )
+            },
           ),
-          IconButton(
-            icon: const Icon(Icons.sync_outlined),
-            tooltip: 'Refresh',
-            onPressed: () {},
+          TextButton(
+            child: Text(
+              "Register",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: currentTab == 6 ? secondaryColor : Colors.white70,
+              ),
+            ),
+            onPressed: () => {
+              setState(
+                () {
+                  currentScreen = Register();
+                  currentTab = 6;
+                },
+              )
+            },
           ),
+          // CircleAvatar(
+          //   radius: 25,
+          //   backgroundImage: NetworkImage(
+          //       'https://cdn.pixabay.com/photo/2018/03/21/16/50/woman-3247382__340.jpg'),
+          // ),
+          // TextButton(
+          //   child: Text(
+          //     "Logout",
+          //     style: TextStyle(
+          //       fontWeight: FontWeight.bold,
+          //       color: secondaryColor,
+          //     ),
+          //   ),
+          //   onPressed: () => {
+          //     setState(
+          //       () {
+          //         currentScreen = Login();
+          //       },
+          //     )
+          //   },
+          // ),
         ],
       ),
       drawer: myDrawer(context, currentScreen, setState),
@@ -56,26 +104,12 @@ class _LayoutState extends State<Layout> {
                     setState(
                       () {
                         currentScreen = Home();
-                        currentTab = 0;
+                        currentTab = 1;
                       },
                     )
                   },
                   child: Icon(
                     Icons.home,
-                    //currentTab == 3 ? Colors.white : Colors.black)
-                    color: currentTab == 0 ? secondaryColor : Colors.white70,
-                  ),
-                ),
-                MaterialButton(
-                  minWidth: 60,
-                  onPressed: () => {
-                    setState(() {
-                      currentScreen = Favourite();
-                      currentTab = 1;
-                    })
-                  },
-                  child: Icon(
-                    Icons.favorite_outline,
                     color: currentTab == 1 ? secondaryColor : Colors.white70,
                   ),
                 ),
@@ -83,13 +117,26 @@ class _LayoutState extends State<Layout> {
                   minWidth: 60,
                   onPressed: () => {
                     setState(() {
-                      currentScreen = Search();
+                      currentScreen = Favourite();
                       currentTab = 2;
                     })
                   },
                   child: Icon(
-                    Icons.search,
+                    Icons.favorite_outline,
                     color: currentTab == 2 ? secondaryColor : Colors.white70,
+                  ),
+                ),
+                MaterialButton(
+                  minWidth: 60,
+                  onPressed: () => {
+                    setState(() {
+                      currentScreen = Search();
+                      currentTab = 3;
+                    })
+                  },
+                  child: Icon(
+                    Icons.search,
+                    color: currentTab == 3 ? secondaryColor : Colors.white70,
                   ),
                 ),
                 MaterialButton(
@@ -98,13 +145,13 @@ class _LayoutState extends State<Layout> {
                     setState(
                       () {
                         currentScreen = Profile();
-                        currentTab = 3;
+                        currentTab = 4;
                       },
                     )
                   },
                   child: Icon(
                     Icons.person,
-                    color: currentTab == 3 ? secondaryColor : Colors.white70,
+                    color: currentTab == 4 ? secondaryColor : Colors.white70,
                   ),
                 ),
               ]),
