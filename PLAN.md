@@ -14,10 +14,10 @@
     - [x] Login Page
     - [x] Singup Page
 - [ ] BackEnd
-  - [ ] Fetch Data From News API
+  - [x] Fetch Data From News API
   - [ ] Setting up firebase authentication
   - [ ] creating nodejs server and database
   - [ ] add favourite news in database
   - [ ] check if user login or not
-- [ ] Show Data on UI
-  - [ ] make UI attractive
+- [x] Show Data on UI
+  - [x] make UI attractive
