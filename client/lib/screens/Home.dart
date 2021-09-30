@@ -1,5 +1,8 @@
+import 'package:client/services/news_serviceApi.dart';
 import 'package:flutter/material.dart';
 import 'package:client/constant/constant.dart';
+import 'package:client/model/news_model.dart';
+import 'package:client/components/customListTile.dart';
 
 class Home extends StatefulWidget {
   const Home({Key key}) : super(key: key);
@@ -9,114 +12,60 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  ApiService client = ApiService();
+  Widget allnews() {
+    return FutureBuilder(
+      future: client.getArticle(),
+      builder: (BuildContext context, AsyncSnapshot<List<Article>> snapshot) {
+        //let's check if we got a response or not
+        if (snapshot.hasData) {
+          //Now let's make a list of articles
+          List<Article> articles = snapshot.data;
+          return ListView.builder(
+            //Now let's create our custom List tile
+            itemCount: articles.length,
+            itemBuilder: (context, index) =>
+                customListTile(articles[index], context),
+          );
+        } else if (snapshot.hasError) {
+          return Text('${snapshot.error}');
+        }
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: primaryColor,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              width: MediaQuery.of(context).size.width,
-              child: Center(
-                child: Text(
-                  "News Homepage",
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: secondaryColor,
-                  ),
-                ),
-              ),
-            ),
-            myCard(
-              "Waleed ur Rehman",
-              "https://cdn.pixabay.com/photo/2018/03/21/16/50/woman-3247382__340.jpg",
-            ),
-            myCard(
-              "Waleed ur Rehman",
-              "https://cdn.pixabay.com/photo/2018/03/21/16/50/woman-3247382__340.jpg",
-            ),
-            myCard(
-              "Waleed ur Rehman",
-              "https://cdn.pixabay.com/photo/2018/03/21/16/50/woman-3247382__340.jpg",
-            ),
-            myCard(
-              "Waleed ur Rehman",
-              "https://cdn.pixabay.com/photo/2018/03/21/16/50/woman-3247382__340.jpg",
-            ),
-            myCard(
-              "Waleed ur Rehman",
-              "https://cdn.pixabay.com/photo/2018/03/21/16/50/woman-3247382__340.jpg",
-            ),
-            myCard(
-              "Waleed ur Rehman",
-              "https://cdn.pixabay.com/photo/2018/03/21/16/50/woman-3247382__340.jpg",
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-Widget myCard(name, image) {
-  return GestureDetector(
-    onTap: () {
-      print("You Tap On Card");
-    },
-    child: Card(
-      elevation: 1.5,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        verticalDirection: VerticalDirection.down,
+      body: Column(
         children: <Widget>[
-          Image(
-            image: NetworkImage(image),
-          ),
           Container(
-            margin: EdgeInsets.only(left: 5, right: 5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  name,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
+            padding: EdgeInsets.all(10),
+            margin: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: primaryColor,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            width: MediaQuery.of(context).size.width,
+            child: Center(
+              child: Text(
+                "News Homepage",
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: secondaryColor,
                 ),
-                IconButton(icon: Icon(Icons.favorite_border), onPressed: () {})
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 5, right: 5),
-            child: Text("Description Goes Here"),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 5, right: 5),
-            child: ElevatedButton(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Read More'),
-                  Icon(Icons.arrow_forward_ios),
-                ],
               ),
-              onPressed: () {
-                print('Button Pressed from card');
-              },
             ),
+          ),
+          Expanded(
+            child: allnews(),
           ),
         ],
       ),
-    ),
-  );
+    );
+  }
 }
