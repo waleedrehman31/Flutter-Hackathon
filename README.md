@@ -22,6 +22,8 @@ For plan kindly check out my [PLAN.md](./PLAN.md) File.
 - ### Authentication
   - Firebase Authentication
 - ### APIs
-  - [MediaStack](https://mediastack.com/)
   - [NewsApi](https://newsapi.org/)
-    :sparkles:
+
+
+
+
