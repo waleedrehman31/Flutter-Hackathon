@@ -17,18 +17,42 @@ class _HomeState extends State<Home> {
     return FutureBuilder(
       future: client.getArticle(),
       builder: (BuildContext context, AsyncSnapshot<List<Article>> snapshot) {
-        //let's check if we got a response or not
         if (snapshot.hasData) {
-          //Now let's make a list of articles
           List<Article> articles = snapshot.data;
           return ListView.builder(
-            //Now let's create our custom List tile
             itemCount: articles.length,
             itemBuilder: (context, index) =>
                 customListTile(articles[index], context),
           );
         } else if (snapshot.hasError) {
-          return Text('${snapshot.error}');
+          if (snapshot.error.runtimeType.toString() == "SocketException") {
+            return AlertDialog(
+              title: new Text(
+                "Network Error",
+                style: TextStyle(
+                  color: Colors.redAccent,
+                  fontSize: 25.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              content: new Text(
+                "Kindly Check Your Internet! ${snapshot.error.runtimeType.toString()} : ${snapshot.error.hashCode}",
+                style: TextStyle(
+                  fontSize: 18.0,
+                ),
+              ),
+              actions: <Widget>[
+                new ElevatedButton(
+                  child: new Text("Close"),
+                  style: ElevatedButton.styleFrom(primary: primaryColor),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          }
+          return Text('${snapshot.error.runtimeType.toString()}');
         }
         return Center(
           child: CircularProgressIndicator(),
