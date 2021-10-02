@@ -12,6 +12,37 @@ class _RegisterState extends State<Register> {
   bool _passwordVisible = true;
   @override
   Widget build(BuildContext context) {
+    final TextEditingController nameController = TextEditingController();
+    final TextEditingController userNameController = TextEditingController();
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+    onSubmit() {
+      final String fullName = nameController.text;
+      final String userName = userNameController.text;
+      final String email = emailController.text;
+      final String password = passwordController.text;
+      if (fullName == '' && userName == '' && email == '' && password == '') {
+        print("Please Enter All Information");
+        return Text("Please Enter Your Email and Password");
+      } else if (fullName == '') {
+        print("Please Enter Your Full Name ");
+        return Text("Please Enter Your Email");
+      } else if (userName == '') {
+        print("Please Enter Your UserName ");
+        return Text("Please Enter Your Email");
+      } else if (email == '') {
+        print("Please Enter Your Email ");
+        return Text("Please Enter Your Email");
+      } else if (password == '') {
+        print("Please Enter Your Password");
+        return Text("Please Enter Your Password");
+      }
+      print("Full Name: " + nameController.text);
+      print("UserName: " + userNameController.text);
+      print("Email: " + emailController.text);
+      print("Password: " + passwordController.text);
+    }
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -47,6 +78,7 @@ class _RegisterState extends State<Register> {
                     height: 10,
                   ),
                   TextFormField(
+                    controller: nameController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Full Name',
@@ -70,6 +102,7 @@ class _RegisterState extends State<Register> {
                     height: 10,
                   ),
                   TextFormField(
+                    controller: userNameController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Username Name',
@@ -93,6 +126,7 @@ class _RegisterState extends State<Register> {
                     height: 10,
                   ),
                   TextFormField(
+                    controller: emailController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Email',
@@ -118,6 +152,7 @@ class _RegisterState extends State<Register> {
                   StatefulBuilder(builder: (_context, _setState) {
                     // only following widget gets update when _setState is used
                     return TextFormField(
+                      controller: passwordController,
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -156,7 +191,7 @@ class _RegisterState extends State<Register> {
                     height: 10,
                   ),
                   ElevatedButton(
-                    onPressed: () => {},
+                    onPressed: onSubmit,
                     child: Text(
                       "Register",
                       style: TextStyle(
