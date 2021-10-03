@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:client/constant/constant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:image_picker/image_picker.dart';
 
 class Register extends StatefulWidget {
   const Register({Key key}) : super(key: key);
@@ -13,29 +17,48 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   bool _passwordVisible = false;
   final _formKey = GlobalKey<FormState>();
+  String imagePath;
   @override
   Widget build(BuildContext context) {
     final TextEditingController nameController = TextEditingController();
     final TextEditingController userNameController = TextEditingController();
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
+    getImage() async {
+      final ImagePicker _picker = ImagePicker();
+      final XFile image = await _picker.pickImage(source: ImageSource.gallery);
+      setState(() {
+        imagePath = image.path;
+      });
+      print("image picked");
+    }
+
     onSubmit() async {
       FirebaseAuth auth = FirebaseAuth.instance;
       FirebaseFirestore db = FirebaseFirestore.instance;
+      firebase_storage.FirebaseStorage storage =
+          firebase_storage.FirebaseStorage.instance;
+      firebase_storage.Reference ref =
+          firebase_storage.FirebaseStorage.instance.ref('/image.jpg');
+
       final String fullName = nameController.text;
       final String userName = userNameController.text;
       final String userEmail = emailController.text;
       final String userPassword = passwordController.text;
       try {
+        File imageFile = File(imagePath);
+        await ref.putFile(imageFile);
+        String imageURL = await ref.getDownloadURL();
         UserCredential userCredential =
             await auth.createUserWithEmailAndPassword(
                 email: userEmail, password: userPassword);
         await db.collection("user").doc(userCredential.user.uid).set({
-          "Name": fullName,
-          "User Name": userName,
-          "Email": userEmail,
+          "full_name": fullName,
+          "user_name": userName,
+          "email": userEmail,
+          "profile_image": imageURL,
         });
-        print("User Is Registered ");
+        print("User Is Registered with upload image");
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           print('The password provided is too weak.');
@@ -73,7 +96,6 @@ class _RegisterState extends State<Register> {
             Container(
               margin: EdgeInsets.only(left: 10, right: 10),
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 2,
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -208,6 +230,20 @@ class _RegisterState extends State<Register> {
                         ),
                       );
                     }),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ElevatedButton(
+                      onPressed: getImage,
+                      child: Text(
+                        "Upload Image",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(primary: primaryColor),
+                    ),
                     SizedBox(
                       height: 10,
                     ),
