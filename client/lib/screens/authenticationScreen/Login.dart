@@ -27,7 +27,7 @@ class _LoginState extends State<Login> {
           await db.collection("user").doc(userCredential.user.uid).get();
       final userData = userInformation.data();
       print("User Is Logedin ");
-      print(userData);
+      Navigator.of(context).pushNamed("/home");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
