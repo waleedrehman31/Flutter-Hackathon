@@ -7,6 +7,7 @@
 - [x] Create UI
   - [x] Create Layout
   - [x] Home Page
+  - [x] News Detail page
   - [x] Profile Screen
   - [x] Search Screen
   - [x] Favourite News Screen
@@ -21,3 +22,4 @@
   - [ ] check if user login or not
 - [x] Show Data on UI
   - [x] make UI attractive
+  - [x] form validation
