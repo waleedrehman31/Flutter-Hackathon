@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:client/constant/constant.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Login extends StatefulWidget {
   const Login({Key key}) : super(key: key);
@@ -11,6 +13,32 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   bool _passwordVisible = false;
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  onSubmit() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    final String userEmail = emailController.text;
+    final String userPassword = passwordController.text;
+    try {
+      final UserCredential userCredential = await auth
+          .signInWithEmailAndPassword(email: userEmail, password: userPassword);
+      final DocumentSnapshot userInformation =
+          await db.collection("user").doc(userCredential.user.uid).get();
+      final userData = userInformation.data();
+      print("User Is Logedin ");
+      print(userData);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +78,7 @@ class _LoginState extends State<Login> {
                       height: 10,
                     ),
                     TextFormField(
+                      controller: emailController,
                       autocorrect: false,
                       textCapitalization: TextCapitalization.none,
                       enableSuggestions: false,
@@ -85,6 +114,7 @@ class _LoginState extends State<Login> {
                     StatefulBuilder(builder: (_context, _setState) {
                       // only following widget gets update when _setState is used
                       return TextFormField(
+                        controller: passwordController,
                         key: ValueKey('password'),
                         validator: (value) {
                           if (value.isEmpty || value.length < 7) {
@@ -132,12 +162,11 @@ class _LoginState extends State<Login> {
                     ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState.validate()) {
-                          // If the form is valid, display a snackbar. In the real world,
-                          // you'd often call a server or save the information in a database.
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('Processing Data')),
                           );
                         }
+                        onSubmit();
                       },
                       child: Text(
                         "Login",
