@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:client/constant/constant.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Register extends StatefulWidget {
   const Register({Key key}) : super(key: key);
@@ -13,20 +15,36 @@ class _RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    final String errorType = '';
     final TextEditingController nameController = TextEditingController();
     final TextEditingController userNameController = TextEditingController();
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
-    onSubmit() {
+    onSubmit() async {
+      FirebaseAuth auth = FirebaseAuth.instance;
+      FirebaseFirestore db = FirebaseFirestore.instance;
       final String fullName = nameController.text;
       final String userName = userNameController.text;
-      final String email = emailController.text;
-      final String password = passwordController.text;
-      print("Full Name: " + nameController.text);
-      print("UserName: " + userNameController.text);
-      print("Email: " + emailController.text);
-      print("Password: " + passwordController.text);
+      final String userEmail = emailController.text;
+      final String userPassword = passwordController.text;
+      try {
+        UserCredential userCredential =
+            await auth.createUserWithEmailAndPassword(
+                email: userEmail, password: userPassword);
+        await db.collection("user").doc(userCredential.user.uid).set({
+          "Name": fullName,
+          "User Name": userName,
+          "Email": userEmail,
+        });
+        print("User Is Registered ");
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          print('The password provided is too weak.');
+        } else if (e.code == 'email-already-in-use') {
+          print('The account already exists for that email.');
+        }
+      } catch (e) {
+        print(e);
+      }
     }
 
     return Scaffold(
@@ -148,7 +166,6 @@ class _RegisterState extends State<Register> {
                       height: 10,
                     ),
                     StatefulBuilder(builder: (_context, _setState) {
-                      // only following widget gets update when _setState is used
                       return TextFormField(
                         key: ValueKey('password'),
                         validator: (value) {
@@ -175,7 +192,6 @@ class _RegisterState extends State<Register> {
                               color: primaryColor,
                             ),
                             onPressed: () {
-                              // use _setState that belong to StatefulBuilder
                               _setState(() {
                                 _passwordVisible = !_passwordVisible;
                               });
@@ -198,8 +214,6 @@ class _RegisterState extends State<Register> {
                     ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState.validate()) {
-                          // If the form is valid, display a snackbar. In the real world,
-                          // you'd often call a server or save the information in a database.
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('Processing Data')),
                           );
