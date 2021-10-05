@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:client/constant/constant.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Favourite extends StatefulWidget {
   const Favourite({Key key}) : super(key: key);
@@ -11,6 +12,17 @@ class Favourite extends StatefulWidget {
 class _FavouriteState extends State<Favourite> {
   @override
   Widget build(BuildContext context) {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    auth.authStateChanges().listen((User user) {
+      if (user == null) {
+        return Scaffold(
+          body: Text("You are Not Logged in"),
+        );
+      } else {
+        print(user.email);
+      }
+    });
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(

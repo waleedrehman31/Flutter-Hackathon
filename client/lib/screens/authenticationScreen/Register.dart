@@ -58,6 +58,7 @@ class _RegisterState extends State<Register> {
           "email": userEmail,
           "profile_image": imageURL,
         });
+        Navigator.of(context).pushNamed("/login");
         print("User Is Registered with upload image");
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
@@ -106,6 +107,12 @@ class _RegisterState extends State<Register> {
                       height: 10,
                     ),
                     TextFormField(
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter Name.';
+                        }
+                        return null;
+                      },
                       controller: nameController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -130,10 +137,16 @@ class _RegisterState extends State<Register> {
                       height: 10,
                     ),
                     TextFormField(
+                      validator: (value) {
+                        if (value.isEmpty || !value.contains('_')) {
+                          return 'Required. Make sure use underscore \"_\" in username';
+                        }
+                        return null;
+                      },
                       controller: userNameController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'Username Name',
+                        labelText: 'Username',
                         icon: const Padding(
                           padding: const EdgeInsets.only(top: 15.0),
                           child: const Icon(
@@ -253,8 +266,8 @@ class _RegisterState extends State<Register> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('Processing Data')),
                           );
+                          onSubmit();
                         }
-                        onSubmit();
                       },
                       child: Text(
                         "Register",

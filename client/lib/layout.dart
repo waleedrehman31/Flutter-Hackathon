@@ -6,6 +6,7 @@ import 'package:client/screens/authenticationScreen/Login.dart';
 import 'package:client/screens/authenticationScreen/Register.dart';
 import 'package:flutter/material.dart';
 import 'package:client/constant/constant.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Layout extends StatefulWidget {
   const Layout({Key key}) : super(key: key);
@@ -21,6 +22,19 @@ class _LayoutState extends State<Layout> {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    auth.authStateChanges().listen((User user) {
+      if (user == null) {
+        print("User Not Logged In");
+        setState(() {
+          isUser = false;
+        });
+      } else {
+        setState(() {
+          isUser = true;
+        });
+      }
+    });
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
@@ -85,7 +99,7 @@ class _LayoutState extends State<Layout> {
           // ),
         ],
       ),
-      drawer: myDrawer(context, currentScreen, setState),
+      drawer: myDrawer(context, currentScreen, setState, isUser),
       body: Center(
         child: PageStorage(bucket: PageStorageBucket(), child: currentScreen),
       ),
@@ -161,8 +175,7 @@ class _LayoutState extends State<Layout> {
   }
 }
 
-Widget myDrawer(context, currentScreen, setState) {
-  bool isUser = false;
+Widget myDrawer(context, currentScreen, setState, isUser) {
   if (isUser) {
     return Drawer(
       child: Column(

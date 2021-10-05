@@ -1,6 +1,10 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:client/constant/constant.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key key}) : super(key: key);
@@ -12,6 +16,41 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    print(auth.currentUser.metadata);
+    String userUid = auth.currentUser.uid;
+    String userEmail = auth.currentUser.email;
+    db
+        .collection("user")
+        .doc(userUid)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        print('Document exists on the database');
+        return FutureBuilder<DocumentSnapshot>(
+          future: documentSnapshot.data(),
+          builder:
+              (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+            if (snapshot.hasError) {
+              return Text("Something went wrong");
+            }
+
+            if (snapshot.hasData && !snapshot.data.exists) {
+              return Text("Document does not exist");
+            }
+
+            if (snapshot.connectionState == ConnectionState.done) {
+              Map<String, dynamic> data =
+                  snapshot.data.data() as Map<String, dynamic>;
+              return Text("Full Name: ${data['profile_image']}");
+            }
+
+            return Text("loading");
+          },
+        );
+      }
+    });
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -48,7 +87,7 @@ class _ProfileState extends State<Profile> {
                     "https://cdn.pixabay.com/photo/2018/03/21/16/50/woman-3247382__340.jpg"),
               ),
             ),
-            myContainer(context, "ID: ", "0121355645641"),
+            myContainer(context, "ID: ", userUid),
             myContainer(context, "Full Name: ", "Waleed ur Rehman"),
             myContainer(context, "Username: ", "waleedrehman31"),
             myContainer(context, "Email: ", "waleedrehman31@gmail.com"),
