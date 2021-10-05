@@ -21,36 +21,8 @@ class _ProfileState extends State<Profile> {
     print(auth.currentUser.metadata);
     String userUid = auth.currentUser.uid;
     String userEmail = auth.currentUser.email;
-    db
-        .collection("user")
-        .doc(userUid)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      if (documentSnapshot.exists) {
-        print('Document exists on the database');
-        return FutureBuilder<DocumentSnapshot>(
-          future: documentSnapshot.data(),
-          builder:
-              (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-            if (snapshot.hasError) {
-              return Text("Something went wrong");
-            }
-
-            if (snapshot.hasData && !snapshot.data.exists) {
-              return Text("Document does not exist");
-            }
-
-            if (snapshot.connectionState == ConnectionState.done) {
-              Map<String, dynamic> data =
-                  snapshot.data.data() as Map<String, dynamic>;
-              return Text("Full Name: ${data['profile_image']}");
-            }
-
-            return Text("loading");
-          },
-        );
-      }
-    });
+    Stream documentStream =
+        FirebaseFirestore.instance.collection('user').doc(userUid).snapshots();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -86,6 +58,30 @@ class _ProfileState extends State<Profile> {
                 image: NetworkImage(
                     "https://cdn.pixabay.com/photo/2018/03/21/16/50/woman-3247382__340.jpg"),
               ),
+            ),
+            StreamBuilder<QuerySnapshot>(
+              stream: documentStream,
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Something went wrong');
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Text("Loading");
+                }
+
+                return ListView(
+                  children: snapshot.data.docs.map((DocumentSnapshot document) {
+                    Map<String, dynamic> data =
+                        document.data() as Map<String, dynamic>;
+                    return ListTile(
+                      title: Text(data['full_name']),
+                      subtitle: Text(data['company']),
+                    );
+                  }).toList(),
+                );
+              },
             ),
             myContainer(context, "ID: ", userUid),
             myContainer(context, "Full Name: ", "Waleed ur Rehman"),
