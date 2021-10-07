@@ -21,8 +21,13 @@ class _ProfileState extends State<Profile> {
     print(auth.currentUser.metadata);
     String userUid = auth.currentUser.uid;
     String userEmail = auth.currentUser.email;
-    Stream documentStream =
-        FirebaseFirestore.instance.collection('user').doc(userUid).snapshots();
+    dynamic data = db.collection('user').doc(userUid).get();
+    data.then((DocumentSnapshot documentSnapshot) {
+      dynamic email = documentSnapshot.get(FieldPath(['email']));
+
+      print(email);
+    });
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -56,37 +61,13 @@ class _ProfileState extends State<Profile> {
               ),
               child: Image(
                 image: NetworkImage(
-                    "https://cdn.pixabay.com/photo/2018/03/21/16/50/woman-3247382__340.jpg"),
+                    "https://upload.wikimedia.org/wikipedia/commons/d/df/Img_logo_blue.jpg"),
               ),
             ),
-            StreamBuilder<QuerySnapshot>(
-              stream: documentStream,
-              builder: (BuildContext context,
-                  AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (snapshot.hasError) {
-                  return Text('Something went wrong');
-                }
-
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Text("Loading");
-                }
-
-                return ListView(
-                  children: snapshot.data.docs.map((DocumentSnapshot document) {
-                    Map<String, dynamic> data =
-                        document.data() as Map<String, dynamic>;
-                    return ListTile(
-                      title: Text(data['full_name']),
-                      subtitle: Text(data['company']),
-                    );
-                  }).toList(),
-                );
-              },
-            ),
             myContainer(context, "ID: ", userUid),
-            myContainer(context, "Full Name: ", "Waleed ur Rehman"),
-            myContainer(context, "Username: ", "waleedrehman31"),
-            myContainer(context, "Email: ", "waleedrehman31@gmail.com"),
+            myContainer(context, "Full Name: ", "userFullName"),
+            myContainer(context, "Username: ", "userName"),
+            myContainer(context, "Email: ", userEmail),
             myContainer(context, "Joined Date: ", "28, 8, 2021"),
             Container(
               width: MediaQuery.of(context).size.width,
