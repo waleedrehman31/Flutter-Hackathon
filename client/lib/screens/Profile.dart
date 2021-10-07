@@ -79,7 +79,9 @@ class _ProfileState extends State<Profile> {
                 right: 5,
               ),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  FirebaseAuth.instance.signOut();
+                },
                 child: Text(
                   "Logout",
                   style: TextStyle(
