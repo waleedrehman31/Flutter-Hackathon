@@ -16,9 +16,9 @@ For plan kindly check out my [PLAN.md](./PLAN.md) File.
 - ### Front End
   - Flutter
 - ### Back End
-  - NodeJS
+  - Firebase
 - ### Database
-  - MongoDB
+  - Firestore and Firestorage
 - ### Authentication
   - Firebase Authentication
 - ### APIs
