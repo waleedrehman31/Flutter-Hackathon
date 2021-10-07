@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:client/model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,9 +24,11 @@ class _ProfileState extends State<Profile> {
     String userEmail = auth.currentUser.email;
     dynamic data = db.collection('user').doc(userUid).get();
     data.then((DocumentSnapshot documentSnapshot) {
-      dynamic email = documentSnapshot.get(FieldPath(['email']));
-
-      print(email);
+      if (documentSnapshot.exists) {
+        print('Document exists on the database');
+        Map<String, dynamic> jsonData = json.decode(documentSnapshot.data());
+        final myuserInformation = myUser.fromJson(jsonData);
+      }
     });
 
     return Scaffold(
@@ -65,9 +68,9 @@ class _ProfileState extends State<Profile> {
               ),
             ),
             myContainer(context, "ID: ", userUid),
-            myContainer(context, "Full Name: ", "userFullName"),
+            myContainer(context, "Full Name: ", "d"),
             myContainer(context, "Username: ", "userName"),
-            myContainer(context, "Email: ", userEmail),
+            myContainer(context, "Email: ", "jh"),
             myContainer(context, "Joined Date: ", "28, 8, 2021"),
             Container(
               width: MediaQuery.of(context).size.width,
