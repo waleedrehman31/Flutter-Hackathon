@@ -36,69 +36,7 @@ class _LayoutState extends State<Layout> {
       }
     });
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: primaryColor,
-        title: Text("News App"),
-        actions: <Widget>[
-          TextButton(
-            child: Text(
-              "Login",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: currentTab == 5 ? secondaryColor : Colors.white70,
-              ),
-            ),
-            onPressed: () => {
-              setState(
-                () {
-                  currentScreen = Login();
-                  currentTab = 5;
-                },
-              )
-            },
-          ),
-          TextButton(
-            child: Text(
-              "Register",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: currentTab == 6 ? secondaryColor : Colors.white70,
-              ),
-            ),
-            onPressed: () => {
-              setState(
-                () {
-                  currentScreen = Register();
-                  currentTab = 6;
-                },
-              )
-            },
-          ),
-          // CircleAvatar(
-          //   radius: 25,
-          //   backgroundImage: NetworkImage(
-          //       'https://cdn.pixabay.com/photo/2018/03/21/16/50/woman-3247382__340.jpg'),
-          // ),
-          // TextButton(
-          //   child: Text(
-          //     "Logout",
-          //     style: TextStyle(
-          //       fontWeight: FontWeight.bold,
-          //       color: secondaryColor,
-          //     ),
-          //   ),
-          //   onPressed: () => {
-          //     setState(
-          //       () {
-          //         currentScreen = Login();
-          //       },
-          //     )
-          //   },
-          // ),
-        ],
-      ),
+      appBar: myAppbar(context, currentScreen, currentTab, setState, isUser),
       drawer: myDrawer(context, currentScreen, setState, isUser),
       body: Center(
         child: PageStorage(bucket: PageStorageBucket(), child: currentScreen),
@@ -175,6 +113,82 @@ class _LayoutState extends State<Layout> {
   }
 }
 
+Widget myAppbar(context, currentScreen, currentTab, setState, isUser) {
+  if (isUser) {
+    return AppBar(
+      backgroundColor: primaryColor,
+      title: Text("News App"),
+      actions: <Widget>[
+        CircleAvatar(
+          radius: 25,
+          backgroundImage: NetworkImage(
+              'https://cdn.pixabay.com/photo/2018/03/21/16/50/woman-3247382__340.jpg'),
+        ),
+        TextButton(
+          child: Text(
+            "Logout",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: secondaryColor,
+            ),
+          ),
+          onPressed: () => {
+            setState(
+              () {
+                currentScreen = Login();
+              },
+              FirebaseAuth.instance.signOut(),
+            )
+          },
+        ),
+      ],
+    );
+  } else {
+    return AppBar(
+      backgroundColor: primaryColor,
+      title: Text("News App"),
+      actions: <Widget>[
+        TextButton(
+          child: Text(
+            "Login",
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: currentTab == 5 ? secondaryColor : Colors.white70,
+            ),
+          ),
+          onPressed: () => {
+            setState(
+              () {
+                currentScreen = Login();
+                currentTab = 5;
+              },
+            )
+          },
+        ),
+        TextButton(
+          child: Text(
+            "Register",
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: currentTab == 6 ? secondaryColor : Colors.white70,
+            ),
+          ),
+          onPressed: () => {
+            setState(
+              () {
+                currentScreen = Register();
+                currentTab = 6;
+              },
+            )
+          },
+        ),
+      ],
+    );
+  }
+}
+
 Widget myDrawer(context, currentScreen, setState, isUser) {
   if (isUser) {
     return Drawer(
@@ -210,7 +224,9 @@ Widget myDrawer(context, currentScreen, setState, isUser) {
             height: 275,
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              FirebaseAuth.instance.signOut();
+            },
             child: Container(
               decoration: BoxDecoration(
                 color: primaryColor,
